@@ -1,3 +1,4 @@
+import numpy as np
 # Matrix operation
 # using matrix find value of the variable in linear system of equation
 # linear equation look----> ax + by + c = 0
@@ -89,7 +90,9 @@ def f(a):
     
     for m in range(len(a)-1):
         for i in range(m+1, len(a)): # row accessing loop
-            x = a[i][m];
+            
+            # for keep fix the value of a[i][m]
+            x = a[i][m];  
             for j in range(m, len(a[0])): # colum accessing loop
                 
                 a[i][j] = a[i][j] - (a[m][j] * x/a[m][m]);
@@ -119,11 +122,27 @@ def unknownSolve(a):
                 index = index+1;
     result.reverse();
     return result;
+
+def findValue(a,b):
+    c = np.zeros((len(a), len(a[0])+1));
+    index  = 0;
+    for i in range(len(a)):
+        for j in range(len(a[0])+1):
+            if len(a[0]) == j:
+                c[i][j] = -b[index];
+                index = index+1;
+            else:    
+                c[i][j] = a[i][j];
     
-    
- #-----------------user access region------------------->
- a = [[2,1, 1,-10],
-     [3,2,3,-18],
-     [1,4,9,-16]]
-c= unknownSolve(a);
-print(c);
+    c = unknownSolve(c);
+    return c;
+
+#-----------------------user work space-----------------------
+a = [[10,-2, -1,-1],
+     [-2,10,-1,-1],
+     [-1,-1,10,-2],
+    [-1,-1,-2,10]]
+b = [3,15,27,-9];
+
+print(findValue(a,b));
+        
